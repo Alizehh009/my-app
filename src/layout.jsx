@@ -1,4 +1,6 @@
+// src/app/layout.jsx
 import './globals.css';
+import ClientLayout from './ClientLayout';
 
 export const metadata = {
   title: 'Supply Chain Dashboard',
@@ -8,7 +10,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ClientLayout>{children}</ClientLayout>
+      </body>
     </html>
   );
 }

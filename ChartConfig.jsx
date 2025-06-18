@@ -266,6 +266,64 @@ export const chartConfigs = {
     }
   },
 
+   socialMediaGrowth: {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      datasets: [
+        {
+          label: 'Visits A',
+          data: [200, 300, 400, 500, 600, 700],
+          borderColor: '#32CD32',
+          backgroundColor: 'rgba(50, 205, 50, 0.4)',
+          fill: true,
+          tension: 0.4
+        },
+        {
+          label: 'Visits B',
+          data: [150, 250, 350, 450, 550, 650],
+          borderColor: '#FF8C00',
+          backgroundColor: 'rgba(255, 140, 0, 0.4)',
+          fill: true,
+          tension: 0.4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { display: false },
+        y: { display: false }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: false }
+      }
+    }
+  },
+
+  CostRevenue: {
+    type: 'doughnut',
+    data: {
+      labels: ['Category A', 'Category B', 'Category C', 'Category D'],
+      datasets: [{
+        data: [30, 25, 25, 20],
+        backgroundColor: ['#FF4500', '#FFD700', '#00CED1', '#6A5ACD'],
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: false }
+      },
+      cutout: '70%'
+    }
+  },
+
   dsoDpo: {
     type: 'bar',
     data: {

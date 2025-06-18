@@ -1,0 +1,130 @@
+.header {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  padding: 10px 20px;
+  background-color: #f8f9fa; /* Light gray background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  min-height: 100vh; /* Full viewport height for vertical centering */
+  margin: 0 auto; /* Center the header itself if needed */
+}
+
+.login-buttons {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: center; /* Center buttons horizontally within the container */
+  gap: 20px; /* Space between buttons */
+  width: 300px; /* Fixed width for consistency */
+  max-width: 400px; /* Maximum width to prevent overflow */
+  background-color: #fff; /* White background */
+  padding: 20px; /* Padding inside the container */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between profile items */
+}
+
+.profile-img {
+  width: 50px; /* Image size */
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-name {
+  font-size: 18px; /* Font size for name */
+  font-weight: 600;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Space between icon and text */
+  padding: 12px 24px; /* Larger padding for bigger buttons */
+  border: none;
+  border-radius: 8px; /* Softer corners */
+  cursor: pointer;
+  font-size: 16px; /* Larger font */
+  transition: background-color 0.2s;
+  width: 100%; /* Full width of container */
+  justify-content: center; /* Center text and icon */
+  min-height: 60px; /* Minimum height for larger buttons */
+  margin: 0 auto; /* Optional: Fine-tune centering if needed */
+}
+
+.btn.google {
+  background-color: #db4437;
+  color: white;
+}
+
+.btn.google:hover {
+  background-color: #c1351d;
+}
+
+.btn.facebook {
+  background-color: #3b5998;
+  color: white;
+}
+
+.btn.facebook:hover {
+  background-color: #2f477a;
+}
+
+.btn.twitter {
+  background-color: #1da1f2;
+  color: white;
+}
+
+.btn.twitter:hover {
+  background-color: #1a91da;
+}
+
+.btn.logout {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn.logout:hover {
+  background-color: #5a6268;
+}
+
+.loading {
+  font-size: 16px;
+  color: #666;
+}
+
+@media (max-width: 600px) {
+  .login-buttons {
+    gap: 15px; /* Adjusted gap for mobile */
+    width: 250px; /* Reduced width on mobile */
+    max-width: 300px; /* Adjusted max-width */
+    padding: 15px; /* Reduced padding */
+  }
+
+  .profile {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Adjusted gap */
+  }
+
+  .btn {
+    padding: 10px 20px; /* Reduced padding */
+    font-size: 14px; /* Reduced font size */
+    min-height: 50px; /* Reduced height */
+  }
+
+  .profile-img {
+    width: 40px; /* Reduced image size */
+    height: 40px;
+  }
+
+  .user-name {
+    font-size: 16px; /* Reduced font size */
+  }
+}
