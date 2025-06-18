@@ -296,6 +296,27 @@ async function seedData() {
           plugins: { legend: { display: false }, tooltip: { enabled: false } },
         },
       },
+      {
+        chartId: 'chart11',
+        title: 'Cost Revenue',
+        value: '38%',
+        subValue: 'this year',
+        imageUrl: 'https://picsum.photos/32/32?random=11',
+        stats: [{ icon: 'eye', value: '20' }, { icon: 'chat', value: '11' }],
+        type: 'bar',
+        data: {
+          labels: ['1', '2', '3', '4', '5', '6', '7', '8'],
+          datasets: [
+            { label: 'Turnover', data: [50, 30, 40, 20, 60, 30, 40, 50], backgroundColor: '#4682B4' },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: { x: { display: false }, y: { display: false } },
+          plugins: { legend: { display: false }, tooltip: { enabled: false } },
+        },
+      },
     ];
 
     await collection.insertMany(chartData);

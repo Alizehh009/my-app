@@ -1,6 +1,75 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import Link from 'next/link';
+import {
+  Chart,
+  ArcElement,
+  BarElement,
+  LineElement,
+  PointElement,
+  LinearScale,
+  CategoryScale,
+  Title,
+  Tooltip,
+  Legend,
+  DoughnutController,
+  PieController,
+  LineController,
+  BarController // Added for bar charts
+} from 'chart.js';
 
-const Card = ({ title, value, subValue, chartId, imageUrl, stats, isCentered, isChart4 }) => {
+Chart.register(
+  ArcElement,
+  BarElement,
+  LineElement,
+  PointElement,
+  LinearScale,
+  CategoryScale,
+  Title,
+  Tooltip,
+  Legend,
+  DoughnutController,
+  PieController,
+  LineController,
+  BarController // Added
+);
+
+const Card = ({
+  title,
+  value,
+  subValue,
+  chartId,
+  imageUrl,
+  stats,
+  isCentered,
+  isChart4,
+  chartDataOption
+}) => {
+  const chartRef = useRef(null);
+
+  useEffect(() => {
+    if (!chartId || !chartDataOption) return;
+
+    const canvas = document.getElementById(chartId);
+    const ctx = canvas?.getContext('2d');
+    if (!ctx) return;
+
+    const existingChart = Chart.getChart(chartId);
+    if (existingChart) existingChart.destroy();
+
+    const { type = 'bar', data, options } = chartDataOption;
+
+    chartRef.current = new Chart(ctx, {
+      type,
+      data,
+      options
+    });
+
+    return () => {
+      const chartToClean = Chart.getChart(chartId);
+      if (chartToClean) chartToClean.destroy();
+    };
+  }, [chartDataOption, chartId]);
+
   const getIcon = (type) => {
     switch (type) {
       case 'eye':
@@ -26,13 +95,15 @@ const Card = ({ title, value, subValue, chartId, imageUrl, stats, isCentered, is
       <h2>{title}</h2>
       <p>{value}</p>
       <p>{subValue}</p>
+
       <div className={isChart4 ? 'chart4-container' : isCentered ? 'chart-container-centered' : 'chart-container'}>
         <canvas id={chartId} className={isCentered ? 'chart-canvas-centered' : 'chart-canvas'}></canvas>
       </div>
+
       <div className="footer">
-        <img src={imageUrl} alt="Profile picture" />
+        <img src={imageUrl} alt="Profile" />
         <div className="stats">
-          {stats.map((stat, index) => (
+          {Array.isArray(stats) && stats.map((stat, index) => (
             <div key={index} className="stat-item">
               {getIcon(stat.icon)}
               <span>{stat.value}</span>
@@ -40,6 +111,10 @@ const Card = ({ title, value, subValue, chartId, imageUrl, stats, isCentered, is
           ))}
         </div>
       </div>
+
+      <Link href={`/chart/${chartId}`}>
+        <button className="view-chart-btn">View Details</button>
+      </Link>
     </div>
   );
 };

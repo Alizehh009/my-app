@@ -1,96 +1,52 @@
-import { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
-import Card from '../Components/card.js';
-import '../styles/global.css';
-import clientPromise from '../lib/mongodb';
+import clientPromise from '../lib/mongodb'
+import HomePage from '../Components/HomePage.jsx'
 
 export async function getServerSideProps() {
   try {
-    const client = await clientPromise;
-    const db = client.db('myDatabase');
-    const collection = db.collection('charts');
-    const chartData = await collection.find({}).toArray();
+    const client = await clientPromise
+    const db = client.db('myDatabase')
+    const collection = db.collection('charts')
+    const chartData = await collection.find({}).toArray()
 
-    const chartConfigs = chartData.map((item) => ({
-      id: item.chartId,
-      type: item.type,
-      data: item.data,
-      options: item.options,
-    }));
+    const chartConfigs = chartData
+      .filter(item => item.chartId)
+      .map(item => ({
+        id: item.chartId,
+        type: item.type ?? 'bar',
+        data: item.data ?? {
+          labels: ['A', 'B', 'C'],
+          datasets: [{
+            label: 'Default',
+            data: [10, 20, 30],
+            backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56']
+          }]
+        },
+        options: item.options ?? { responsive: true },
+      }))
 
-    const cardProps = chartData.map((item) => ({
+    const cardProps = chartData.map((item, index) => ({
+      key: `${item.chartId}-${index}`,
       chartId: item.chartId,
-      title: item.title,
-      value: item.value,
-      subValue: item.subValue,
-      imageUrl: item.imageUrl,
-      stats: item.stats,
+      title: item.title ?? '',
+      value: item.value ?? '',
+      subValue: item.subValue ?? '',
+      imageUrl: typeof item.imageUrl === 'string' ? item.imageUrl.replace(/^"+|"+$/g, '') : '',
+      stats: item.stats ?? [],
       isChart4: item.chartId === 'chart4',
       isCentered: ['chart7', 'chart9'].includes(item.chartId),
-    }));
+    }))
 
     return {
       props: { chartConfigs, cardProps },
-    };
+    }
   } catch (error) {
-    console.error('Error fetching MongoDB data:', error);
+    console.error('Error fetching MongoDB data:', error)
     return {
       props: { chartConfigs: [], cardProps: [] },
-    };
+    }
   }
 }
 
-export default function Home({ chartConfigs, cardProps }) {
-  const chartInstances = useRef([]);
-
-  useEffect(() => {
-    chartInstances.current.forEach((chart) => chart.destroy());
-    chartInstances.current = [];
-
-    chartConfigs.forEach((config) => {
-      const canvas = document.getElementById(config.id);
-      if (canvas) {
-        const ctx = canvas.getContext('2d');
-        canvas.style.height = '100%';
-        canvas.style.width = '100%';
-        const chart = new Chart(ctx, {
-          type: config.type,
-          data: config.data,
-          options: config.options,
-        });
-        chartInstances.current.push(chart);
-      }
-    });
-
-    return () => {
-      chartInstances.current.forEach((chart) => chart.destroy());
-      chartInstances.current = [];
-    };
-  }, [chartConfigs]);
-
-  return (
-    <div>
-      <div className="container">
-        <div className="header">
-          <h1>Supply Chain</h1>
-          <button>Add Card</button>
-        </div>
-        <div className="grid">
-          {cardProps.map((card) => (
-            <Card
-              key={card.chartId}
-              title={card.title}
-              value={card.value}
-              subValue={card.subValue}
-              chartId={card.chartId}
-              imageUrl={card.imageUrl}
-              stats={card.stats}
-              isChart4={card.isChart4}
-              isCentered={card.isCentered}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+export default function Home(props) {
+  return <HomePage {...props} />
 }
