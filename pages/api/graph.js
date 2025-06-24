@@ -1,5 +1,5 @@
 import { connectMongo } from '@/lib/mongodb';
-import GraphData from '@/models/GraphData';
+
 
 export default async function handler(req, res) {
   await connectMongo();

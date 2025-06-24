@@ -151,10 +151,7 @@ body {
   position: relative; /* Ensure canvas respects this container */
 }
 
-.view-chart-btn{
-color: #1d4ed8;
-background-color: #6b7280;
-}
+
 
 .chart-canvas {
   width: 100% !important; /* Force canvas to respect parent width */
